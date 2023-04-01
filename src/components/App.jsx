@@ -8,7 +8,7 @@ import ImageGallery from './ImageGallery/ImageGallery';
 import Button from './Button/Button';
 import Modal from './Modal/Modal';
 import Loader from './Loader/Loader';
-import scrollOnLoad from './utils/scrollLoadBtn'; 
+// import scrollOnLoad from './utils/scrollLoadBtn'; 
 
 import css from './App.module.css';
 
