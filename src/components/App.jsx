@@ -86,7 +86,7 @@ class App extends Component {
           <ImageGallery images={images} openModal={openModal} search={search} />
         )}
 
-        {images.length > 0 && !isLoading && <Button onLoadMore={onLoadMore} />}
+        {images.length >= 12 && !isLoading && <Button onLoadMore={onLoadMore} />}
 
         <ToastContainer />
 
