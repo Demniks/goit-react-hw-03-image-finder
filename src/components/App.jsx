@@ -8,7 +8,7 @@ import ImageGallery from './ImageGallery/ImageGallery';
 import Button from './Button/Button';
 import Modal from './Modal/Modal';
 import Loader from './Loader/Loader';
-// import scrollOnLoad from './utils/scrollLoadBtn'; 
+// import scrollOnLoad from './utils/scrollLoadBtn';
 
 import css from './App.module.css';
 
@@ -20,6 +20,7 @@ class App extends Component {
     isLoading: false,
     error: null,
     currentImage: null,
+    showBtn: false,
   };
 
   componentDidUpdate(_, prevState) {
@@ -44,6 +45,9 @@ class App extends Component {
       // if (page !== 1) {
       //   scrollOnLoad();
       // }
+      const show = this.state.page < Math.ceil(data.totalHits / 12);
+      this.setState({ showBtn: show });
+      
     } catch (error) {
       this.setState({ error: error.message });
     } finally {
@@ -74,7 +78,7 @@ class App extends Component {
 
   render() {
     const { onLoadMore, searchImages, openModal, onClose } = this;
-    const { images, isLoading, error, currentImage, search } = this.state;
+    const { images, isLoading, error, currentImage, search, showBtn } = this.state;
 
     return (
       <>
@@ -86,7 +90,13 @@ class App extends Component {
           <ImageGallery images={images} openModal={openModal} search={search} />
         )}
 
-        {images.length >= 12 && !isLoading && <Button onLoadMore={onLoadMore} />}
+        {images.length >= 12 && showBtn && !isLoading && (
+          <Button onLoadMore={onLoadMore} />
+        )}
+
+        {/* {images.length >= 12 && !isLoading && (
+          <Button onLoadMore={onLoadMore} />
+        )} */}
 
         <ToastContainer />
 
