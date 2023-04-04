@@ -41,13 +41,13 @@ class App extends Component {
         return toast.error('Oops, there are no such pictures. Try again');
       }
 
-      this.setState(({ images }) => ({ images: [...images, ...data.hits] }));
+      this.setState(({ images }) => ({
+        images: [...images, ...data.hits],
+        showBtn: this.state.page < Math.ceil(data.totalHits / 12),
+      }));
       // if (page !== 1) {
       //   scrollOnLoad();
       // }
-      const show = this.state.page < Math.ceil(data.totalHits / 12);
-      this.setState({ showBtn: show });
-      
     } catch (error) {
       this.setState({ error: error.message });
     } finally {
@@ -57,8 +57,7 @@ class App extends Component {
 
   searchImages = ({ search }) => {
     if (search.trim() === '') {
-      this.setState({ images: [], page: 1 });
-      return toast.error('Search field must be filled');
+       toast.error('Search field must be filled');
     }
 
     this.setState({ search, images: [], page: 1 });
@@ -78,7 +77,8 @@ class App extends Component {
 
   render() {
     const { onLoadMore, searchImages, openModal, onClose } = this;
-    const { images, isLoading, error, currentImage, search, showBtn } = this.state;
+    const { images, isLoading, error, currentImage, search, showBtn } =
+      this.state;
 
     return (
       <>
@@ -90,9 +90,7 @@ class App extends Component {
           <ImageGallery images={images} openModal={openModal} search={search} />
         )}
 
-        {images.length >= 12 && showBtn && !isLoading && (
-          <Button onLoadMore={onLoadMore} />
-        )}
+        {showBtn && !isLoading && <Button onLoadMore={onLoadMore} />}
 
         {/* {images.length >= 12 && !isLoading && (
           <Button onLoadMore={onLoadMore} />
