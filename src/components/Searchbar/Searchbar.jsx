@@ -11,12 +11,15 @@ class Searchbar extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    if (this.state.search.trim() === '') {
+        const { search } = this.state;
+        const { onSubmit } = this.props;
+    if (search.trim() === '') {
       toast.error('Search field must be filled');
       return;
     }
-    const { onSubmit } = this.props;
+
     onSubmit({ ...this.state });
+
     this.reset();
   };
 
@@ -48,7 +51,7 @@ class Searchbar extends Component {
             placeholder="Search images and photos"
             required
             name="search"
-            value={this.search}
+            value={this.state.search}
             onChange={this.handleChange}
           />
         </form>
